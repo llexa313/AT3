@@ -1,0 +1,12 @@
+{
+  "name": "task3",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/llexa313/AT3.git"
+  },
+  "dependencies": {
+    "bower": "1.7.2",
+    "express": "4.13.3"
+  }
+}
