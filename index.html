@@ -5,17 +5,33 @@
     <title>Angular Training Task 3</title>
 
     <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="app/css/app.css" />
 
     <script src="components/lodash/lodash.js"></script>
     <script src="components/angular/angular.js"></script>
     <script src="components/ui-router/release/angular-ui-router.min.js"></script>
+    <script src="components/jquery/dist/jquery.min.js"></script>
+    <script src="components/bootstrap/js/tab.js"></script>
 
     <script src="app/app.js"></script>
-</head>
-<body ng-controller="LoginCtrl">
 
-index.html rendered
-AngularJS started <b>{{ !!true }}</b>
+    <script src="app/common/directives.js"></script>
+    <script src="app/common/services.js"></script>
+    <script src="app/common/controllers.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+    <!--<a ui-sref="sign-in">Sign in</a>-->
+    <!--<a ui-sref="sign-out">Sign out</a>-->
+    <!--<a ui-sref="forgot-password">Forgot password?</a>-->
+    <!--<a ui-sref="profile">Profile</a>-->
+    <!--<a ui-sref="profile.edit">Profile edit</a>-->
+
+
+    <div class="app-container">
+        <div class="bg-info message" ng-class="$scope.message ? 'active': '' ">{{ message }}</div>
+        <div ui-view />
+    </div>
 
 </body>
 </html>
