@@ -22,5 +22,6 @@
   "PASSWORD_SENT": "New password was send to your email",
   "NAME_ERROR": "Name must contain 2 words in english with first uppercase letters",
   "AGE_ERROR": "Age must be integer between 18 and 60",
-  "BIRTHDATE_ERROR": "Date must be correct and inputs in format 'DD MMM YYYY'"
+  "BIRTHDATE_ERROR": "Date must be correct and inputs in format 'DD MMM YYYY'",
+  "LOADING": "Loading please wait..."
 }

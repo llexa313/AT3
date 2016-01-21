@@ -23,9 +23,7 @@
 </head>
 <body ng-controller="MainCtrl">
     <div class="app-container">
-        <h3 ng-show="isHttpPending()" class="bg-primary loading">
-            Loading please wait...
-        </h3>
+        <h4 ng-show="isHttpPending()" class="bg-primary loading" translate>LOADING</h4>
         <div ng-show="!isHttpPending()">
             <div class="pull-right switch-lang">
                 <span ng-click="switchLang('ru')">ru</span>
