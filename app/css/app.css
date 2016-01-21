@@ -7,6 +7,12 @@ input.form-control {
     margin: 5px 0;
 }
 
+.loading {
+    margin-top: 30px;
+    border-radius: 5px;
+    padding: 10px 10px;
+}
+
 .message {
     overflow: hidden;
     padding: 0 10px;
@@ -14,8 +20,18 @@ input.form-control {
     line-height: 30px;
     border-radius: 5px;
     margin-top: 20px;
+    clear: both;
 }
 
 .message:empty {
     padding: 0;
+}
+
+.switch-lang span {
+    color: #337ab7;
+    cursor: pointer;
+}
+.switch-lang span:hover {
+    color: #23527c;
+    text-decoration: underline;
 }

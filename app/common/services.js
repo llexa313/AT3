@@ -1,15 +1,32 @@
 'use strict';
 
 angular.module('task3.services', [])
-    .factory('user', ['$http', function ($http) {
-        var signedIn = false;
+    .factory('user', ['$http', '$cacheFactory', function ($http, $cacheFactory) {
+        var signedIn = false,
+            cache = $cacheFactory('dataCache');
 
         return {
             signIn: function(user, success, error) {
-                $http.get('/api/sign-in.json', user).success(function() {
-                    signedIn = true;
-                    success(user);
-                }).error(error);
+                var cacheKey = user.login + ':' + user.password,
+                    response = cache.get(cacheKey),
+                    onSuccess = function(response) {
+                        if (response.success) {
+                            signedIn = true;
+                            success(user, response);
+                        } else {
+                            error('INVALID_PASSWORD');
+                        }
+                    };
+
+                if (response) {
+                    onSuccess(response)
+                } else {
+                    $http.post('/api/sign-in', user, { cache: true })
+                        .success(function(response) {
+                            cache.put(cacheKey, response);
+                            onSuccess(response)
+                        }).error(error);
+                }
             },
             signOut: function() {
                 signedIn = false;
@@ -18,26 +35,27 @@ angular.module('task3.services', [])
                 return signedIn;
             },
             get: function(success, error) {
-                $http.get('/api/get.json').success(success).error(error);
+                $http.get('/api/profile').success(success).error(error);
             },
             update: function(user, success, error) {
-                $http.get('/api/update.json', user).success(success).error(error);
+                $http.post('/api/update', user).success(success).error(error);
             },
             forgotPassword: function (name, success, error) {
-                $http.get('/api/forgot-password.json', { name: name }).success(success).error(error);
+                $http.post('/api/forgot-password', { name: name }).success(success).error(error);
             }
         };
     }])
     .factory('message', function() {
+        // TODO add method to show message that will control animation
+        var message = '';
         return {
-            _message: '',
             set: function (value) {
-                this._message = value;
+                message = value;
             },
             get: function () {
-                var value = this._message;
-                this._message = '';
+                var value = message;
+                message = '';
                 return value;
             }
         }
-    })
+    });

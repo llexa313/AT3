@@ -6,7 +6,11 @@
     "url": "https://github.com/llexa313/AT3.git"
   },
   "dependencies": {
+    "body-parser": "1.14.2",
     "bower": "1.7.2",
-    "express": "4.13.3"
+    "cookie-parser": "1.4.1",
+    "express": "4.13.3",
+    "md5": "^2.0.0",
+    "node-cache": "3.0.1"
   }
 }

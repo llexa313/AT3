@@ -1,12 +1,24 @@
 'use strict';
 
-angular.module('task3App', [
+// cached templates ???
+// body tag have to have only one <ui-view> tag
+
+angular.module('task3', [
         'ui.router',
+        'pascalprecht.translate',
+        'task3.controllers',
         'task3.directives',
-        'task3.services'
+        'task3.services',
+        'ngSanitize'
     ])
-    .config(function($stateProvider, $urlRouterProvider) {
-    //
+    .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function($stateProvider, $urlRouterProvider, $translateProvider) {
+        $translateProvider.useStaticFilesLoader({
+            prefix: 'lang/',
+            suffix: '.json'
+        });
+        $translateProvider.preferredLanguage('ru');
+        $translateProvider.useSanitizeValueStrategy('escape');
+
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("/sign-in");
         //
@@ -14,32 +26,35 @@ angular.module('task3App', [
         $stateProvider
             .state('sign-in', {
                 url: "/sign-in",
-                templateUrl: "app/tpl/signin/signin.html",
+                templateUrl: "views/signin.html",
                 controller: 'SignInCtrl'
             })
             .state('sign-out', {
                 url: "/sign-out",
-                templateUrl: "app/tpl/signout/signout.html",
+                templateUrl: "views/signout.html",
                 controller: 'SignOutCtrl'
             })
             .state('forgot-password', {
                 url: "/forgot-password",
-                templateUrl: "app/tpl/forgotpassword/forgotpassword.html",
+                templateUrl: "views/forgotpassword.html",
                 controller: 'ForgotPasswordCtrl'
             })
             .state('profile', {
                 url: "/profile",
-                templateUrl: "app/tpl/profile/profile.html"
+                templateUrl: "views/profile.html"
             })
             .state('profile.show', {
                 url: "/",
-                templateUrl: "app/tpl/profile/show.html",
+                templateUrl: "views/profile/show.html",
                 controller: 'ProfileShowCtrl'
             })
             .state('profile.edit', {
                 url: "/edit",
-                templateUrl: "app/tpl/profile/edit.html",
+                templateUrl: "views/profile/edit.html",
                 controller: 'ProfileEditCtrl'
-            })
-    ;
-});
+            });
+    }])
+    .run(['$templateCache', function($templateCache) {
+        $templateCache.put('views/signin.html');
+        $templateCache.put('views/profile.html');
+    }]);

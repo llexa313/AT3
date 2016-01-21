@@ -1,36 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="task3App">
+<html lang="en" ng-app="task3">
 <head>
     <meta charset="UTF-8">
     <title>Angular Training Task 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="app/css/app.css" />
 
-    <script src="components/lodash/lodash.js"></script>
+    <script src="components/lodash/dist/lodash.min.js"></script>
     <script src="components/angular/angular.js"></script>
+    <script src="components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="components/ui-router/release/angular-ui-router.min.js"></script>
-    <script src="components/jquery/dist/jquery.min.js"></script>
-    <script src="components/bootstrap/js/tab.js"></script>
-
-    <script src="app/app.js"></script>
+    <script src="components/angular-translate/angular-translate.min.js"></script>
+    <script src="components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
 
     <script src="app/common/directives.js"></script>
     <script src="app/common/services.js"></script>
     <script src="app/common/controllers.js"></script>
+
+    <script src="app/app.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-
-    <!--<a ui-sref="sign-in">Sign in</a>-->
-    <!--<a ui-sref="sign-out">Sign out</a>-->
-    <!--<a ui-sref="forgot-password">Forgot password?</a>-->
-    <!--<a ui-sref="profile">Profile</a>-->
-    <!--<a ui-sref="profile.edit">Profile edit</a>-->
-
-
     <div class="app-container">
-        <div class="bg-info message" ng-class="$scope.message ? 'active': '' ">{{ message }}</div>
-        <div ui-view />
+        <h3 ng-show="isHttpPending()" class="bg-primary loading">
+            Loading please wait...
+        </h3>
+        <div ng-show="!isHttpPending()">
+            <div class="pull-right switch-lang">
+                <span ng-click="switchLang('ru')">ru</span>
+                |
+                <span ng-click="switchLang('en')">en</span>
+            </div>
+            <div class="bg-info message">{{ message }}</div>
+
+            <div  ui-view />
+        </div>
     </div>
 
 </body>
