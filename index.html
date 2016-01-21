@@ -15,11 +15,22 @@
     <script src="components/angular-translate/angular-translate.min.js"></script>
     <script src="components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
 
-    <script src="app/common/directives.js"></script>
-    <script src="app/common/services.js"></script>
-    <script src="app/common/controllers.js"></script>
 
     <script src="app/app.js"></script>
+    <script src="app/config.js"></script>
+
+    <script src="app/common/directives/age.js" ></script>
+    <script src="app/common/directives/fullName.js" ></script>
+    <script src="app/common/directives/birthdate.js" ></script>
+
+    <script src="app/common/services/message.js" ></script>
+    <script src="app/common/services/user.js" ></script>
+
+    <script src="app/pages/main/src/mainCtrl.js" ></script>
+    <script src="app/pages/signin/src/signinCtrl.js" ></script>
+    <script src="app/pages/forgot/src/forgotCtrl.js" ></script>
+    <script src="app/pages/profile/edit/src/profileEditCtrl.js" ></script>
+    <script src="app/pages/profile/show/src/profileShowCtrl.js" ></script>
 </head>
 <body ng-controller="MainCtrl">
     <div class="app-container">

@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('task3.services', [])
-    .factory('user', ['$http', '$cacheFactory', function ($http, $cacheFactory) {
+task3.factory('user', ['$http', '$cacheFactory', function ($http, $cacheFactory) {
         var signedIn = false,
             cache = $cacheFactory('dataCache');
 
@@ -44,18 +43,4 @@ angular.module('task3.services', [])
                 $http.post('/api/forgot-password', { name: name }).success(success).error(error);
             }
         };
-    }])
-    .factory('message', function() {
-        // TODO add method to show message that will control animation
-        var message = '';
-        return {
-            set: function (value) {
-                message = value;
-            },
-            get: function () {
-                var value = message;
-                message = '';
-                return value;
-            }
-        }
-    });
+    }]);

@@ -1,60 +1,22 @@
 'use strict';
 
-// cached templates ???
-// body tag have to have only one <ui-view> tag
+// TODO use app.get with pause
+// TODO forgot-password should return new password
+// TODO add JSON files with data
+// TODO index.html do smth with it
+// TODO instead of res.end use res.send
+// TODO do update feature in backend
+// TODO in lang files use "project.page.key" structure
+// TODO in page refresh profile loaded in XHR
+// TODO sign out don't use properly
+// TODO use services in user service
+// TODO user factory must be a service
+// TODO don't use angular.module anywhere
+// TODO don't use ctrl in index.html
+// TODO body tag have to have only one <ui-view> tag
 
-angular.module('task3', [
+var task3 = angular.module('task3', [
         'ui.router',
         'pascalprecht.translate',
-        'task3.controllers',
-        'task3.directives',
-        'task3.services',
-        'ngSanitize'
-    ])
-    .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function($stateProvider, $urlRouterProvider, $translateProvider) {
-        $translateProvider.useStaticFilesLoader({
-            prefix: 'lang/',
-            suffix: '.json'
-        });
-        $translateProvider.preferredLanguage('ru');
-        $translateProvider.useSanitizeValueStrategy('escape');
-
-        // For any unmatched url, redirect to /state1
-        $urlRouterProvider.otherwise("/sign-in");
-        //
-        // Now set up the states
-        $stateProvider
-            .state('sign-in', {
-                url: "/sign-in",
-                templateUrl: "views/signin.html",
-                controller: 'SignInCtrl'
-            })
-            .state('sign-out', {
-                url: "/sign-out",
-                templateUrl: "views/signout.html",
-                controller: 'SignOutCtrl'
-            })
-            .state('forgot-password', {
-                url: "/forgot-password",
-                templateUrl: "views/forgotpassword.html",
-                controller: 'ForgotPasswordCtrl'
-            })
-            .state('profile', {
-                url: "/profile",
-                templateUrl: "views/profile.html"
-            })
-            .state('profile.show', {
-                url: "/",
-                templateUrl: "views/profile/show.html",
-                controller: 'ProfileShowCtrl'
-            })
-            .state('profile.edit', {
-                url: "/edit",
-                templateUrl: "views/profile/edit.html",
-                controller: 'ProfileEditCtrl'
-            });
-    }])
-    .run(['$templateCache', function($templateCache) {
-        $templateCache.put('views/signin.html');
-        $templateCache.put('views/profile.html');
-    }]);
+        'ngSanitize',
+    ]);
