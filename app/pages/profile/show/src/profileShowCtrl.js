@@ -3,7 +3,7 @@
 task3.controller('ProfileShowCtrl', ['$scope', 'user', '$state', 'message', function($scope, user, $state, message) {
         if (!user.isSignedIn()) {
             message.set('NOT_AUTHORIZED')
-            $state.go('sign-in')
+            $state.go('main.sign-in')
         }
 
         user.get(function(response) {

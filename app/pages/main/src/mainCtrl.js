@@ -27,7 +27,7 @@ task3.controller('MainCtrl', [ '$rootScope', '$scope', '$timeout', '$state', 'us
                 promise = $timeout(function () {
                     message.set('SESSION_TIMEOUT');
                     user.signOut();
-                    $state.go('sign-out');
+                    $state.go('main.sign-out');
                 }, 100000);
             }
         });

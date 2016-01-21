@@ -32,20 +32,7 @@
     <script src="app/pages/profile/edit/src/profileEditCtrl.js" ></script>
     <script src="app/pages/profile/show/src/profileShowCtrl.js" ></script>
 </head>
-<body ng-controller="MainCtrl">
-    <div class="app-container">
-        <h4 ng-show="isHttpPending()" class="bg-primary loading" translate>LOADING</h4>
-        <div ng-show="!isHttpPending()">
-            <div class="pull-right switch-lang">
-                <span ng-click="switchLang('ru')">ru</span>
-                |
-                <span ng-click="switchLang('en')">en</span>
-            </div>
-            <div class="bg-info message">{{ message }}</div>
-
-            <div  ui-view />
-        </div>
-    </div>
-
+<body >
+    <ui-view />
 </body>
 </html>

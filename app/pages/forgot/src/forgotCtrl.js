@@ -4,7 +4,7 @@ task3.controller('ForgotCtrl', ['$scope', 'user', '$state', 'message', function(
         $scope.submit = function() {
             user.forgotPassword($scope.name, function () {
                 message.set('PASSWORD_SENT');
-                $state.go('sign-in');
+                $state.go('main.sign-in');
             }, function () {
                 //TODO: add exception handling
             })

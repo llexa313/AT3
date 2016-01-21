@@ -6,6 +6,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var NodeCache = require( "node-cache" );
 var md5 = require('md5');
+var pause = require('connect-pause')
 
 var app = express();
 
@@ -44,66 +45,49 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.post('/api/sign-in', function (req, res) {
-    setTimeout(function() {
-        var login = req.body.login,
-            password = req.body.password,
-            users = cache.get('users'),
-            sessionId;
+app.post('/api/sign-in', pause(2000), function (req, res) {
+    var login = req.body.login,
+        password = req.body.password,
+        users = cache.get('users'),
+        sessionId;
 
-        for(var i = 0; i < users.length; i++) {
-            if (users[i].login === login) {
-                if (users[i].password === md5(password)) {
-                    sessionId = Math.random() * Number.MAX_SAFE_INTEGER;
-                    users[i].sessionId = sessionId;
-                    cache.set('users', users);
-                    res.cookie('session-id', sessionId);
-                }
-                break;
+    for(var i = 0; i < users.length; i++) {
+        if (users[i].login === login) {
+            if (users[i].password === md5(password)) {
+                sessionId = Math.random() * Number.MAX_SAFE_INTEGER;
+                users[i].sessionId = sessionId;
+                cache.set('users', users);
+                res.cookie('session-id', sessionId);
             }
+            break;
         }
+    }
 
-        res.end(JSON.stringify({
-            success: !!sessionId
-        }));
-
-    }, 2000);
+    res.send({ success: !!sessionId });
 });
 
 
-app.post('/api/forgot-password', function(req, res) {
-    setTimeout(function() {
-        res.end(JSON.stringify({
-            success: true
-        }));
-    }, 2000);
+app.post('/api/forgot-password', pause(2000), function(req, res) {
+    res.send({ success: true });
 });
 
-app.get('/api/profile', function(req, res) {
-    setTimeout(function() {
-        var users = cache.get('users');
+app.get('/api/profile', pause(2000), function(req, res) {
+    var users = cache.get('users');
 
-        for(var i = 0; i < users.length; i++) {
-            if (users[i].sessionId == req.cookies['session-id']) {
-                res.end(JSON.stringify({
-                    name: users[i].name,
-                    age: users[i].age,
-                    birthdate: users[i].birthdate
-                }));
-            }
+    for(var i = 0; i < users.length; i++) {
+        if (users[i].sessionId == req.cookies['session-id']) {
+            return res.send({
+                name: users[i].name,
+                age: users[i].age,
+                birthdate: users[i].birthdate
+            });
         }
-        res.end(JSON.stringify({
-            success: false
-        }));
-    }, 2000);
+    }
+    res.send({ success: false });
 });
 
-app.post('/api/update', function(req, res) {
-    setTimeout(function() {
-        res.end(JSON.stringify({
-            success: true
-        }));
-    }, 2000);
+app.post('/api/update', pause(2000), function(req, res) {
+    res.send({ success: true });
 });
 
 // listen (start app with node server.js) ======================================

@@ -5,7 +5,7 @@ task3.controller('SignInCtrl', ['$scope', 'user', '$state', 'message', function(
 
         $scope.login = function() {
             user.signIn($scope.user, function(response){
-                $state.go('profile.show');
+                $state.go('main.profile.show');
             }, function(e) {
                 message.set(e);
                 $state.reload();

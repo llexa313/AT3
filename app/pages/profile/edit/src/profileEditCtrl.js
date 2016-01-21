@@ -4,7 +4,7 @@ task3.controller('ProfileEditCtrl', ['$scope', 'user', '$state', 'message', func
         var loadedUser;
         if (!user.isSignedIn()) {
             message.set('NOT_AUTHORIZED')
-            $state.go('sign-in')
+            $state.go('main.sign-in')
         } else {
             user.get(function(user) {
                 $scope.user = user;
@@ -21,7 +21,7 @@ task3.controller('ProfileEditCtrl', ['$scope', 'user', '$state', 'message', func
         $scope.submit = function() {
             user.update($scope.user, function() {
                 message.set('PROFILE_UPDATED');
-                $state.go('profile.show')
+                $state.go('main.profile.show')
             }, function() {
                 //TODO: add exception handling
             })
