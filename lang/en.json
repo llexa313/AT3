@@ -1,27 +1,44 @@
 {
-  "SIGN_IN": "Sign in",
-  "SIGN_OUT": "Sign out",
-  "LOGIN": "Login",
-  "PASSWORD": "Password",
-  "FORGOT_PASSWORD": "Forgot password",
-  "SEND_ME_NEW_PASSWORD": "Send me new password",
-  "SESSION_ENDED": "Your session was ended",
-  "NEW_SESSION": "Start a new session",
-  "NAME": "Name",
-  "AGE": "Age",
-  "BIRTHDATE": "Birthdate",
-  "VIEW": "View",
-  "EDIT": "Edit",
-  "SUBMIT": "Submit",
-  "RESET": "Reset",
-  "YOUR_PROFILE": "Your profile",
-  "SESSION_TIMEOUT": "Session was ended by timeout",
-  "PROFILE_UPDATED": "Profile was successfully updated",
-  "NOT_AUTHORIZED": "You are not authorized, please sign in",
-  "INVALID_PASSWORD": "Invalid user or password. Use test/123 or test2/456",
-  "PASSWORD_SENT": "New password was send to your email",
-  "NAME_ERROR": "Name must contain 2 words in english with first uppercase letters",
-  "AGE_ERROR": "Age must be integer between 18 and 60",
-  "BIRTHDATE_ERROR": "Date must be correct and inputs in format 'DD MMM YYYY'",
-  "LOADING": "Loading please wait..."
+  "task3": {
+    "common": {
+      "login": "Login",
+      "forgot": "Forgot password",
+      "loading": "Loading please wait...",
+      "messages": {
+        "sessionTimeout": "Session was ended by timeout",
+        "profileUpdated": "Profile was successfully updated",
+        "notAuthorized": "You are not authorized, please sign in",
+        "invalidPassword": "Invalid user or password",
+        "passwordSent": "Your new password is: {{ newPassword }}"
+      }
+    },
+    "signIn": {
+      "title": "Sign in",
+      "password": "Password"
+    },
+    "signOut": {
+      "title": "Your session was ended",
+      "newSession": "Start a new session"
+    },
+    "forgot": {
+      "submit": "Send me new password"
+    },
+    "profile": {
+      "title": "Your profile",
+      "signOut": "Sign out",
+      "name": "Name",
+      "age": "Age",
+      "birthdate": "Birthdate",
+      "viewPageName": "View",
+      "editPageName": "Edit",
+
+      "edit": {
+        "nameError": "Name must contain 2 words in english with first uppercase letters",
+        "ageError": "Age must be integer between 18 and 60",
+        "birthdateError": "Date must be correct and inputs in format 'DD MMM YYYY'",
+        "submit": "Submit",
+        "reset": "Reset"
+      }
+    }
+  }
 }

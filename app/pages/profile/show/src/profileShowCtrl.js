@@ -1,9 +1,10 @@
 'use strict';
 
-task3.controller('ProfileShowCtrl', ['$scope', 'user', '$state', 'message', function($scope, user, $state, message) {
+task3.controller('ProfileShowCtrl', ['$scope', 'user', '$state', function($scope, user, $state) {
         if (!user.isSignedIn()) {
-            message.set('NOT_AUTHORIZED')
-            $state.go('main.sign-in')
+            $state.go('main.sign-in', { message: {
+                tpl: 'notAuthorized'
+            }});
         }
 
         user.get(function(response) {

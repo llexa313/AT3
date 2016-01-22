@@ -1,14 +1,15 @@
 'use strict';
 
-task3.controller('SignInCtrl', ['$scope', 'user', '$state', 'message', function($scope, user, $state, message) {
+task3.controller('SignInCtrl', ['$scope', 'user', '$state', function($scope, user, $state) {
         $scope.user = {};
 
         $scope.login = function() {
             user.signIn($scope.user, function(response){
                 $state.go('main.profile.show');
             }, function(e) {
-                message.set(e);
-                $state.reload();
+                $state.transitionTo($state.current, { message: {
+                    tpl: e
+                }});
             });
         };
     }]);

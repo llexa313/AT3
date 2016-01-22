@@ -1,7 +1,7 @@
 'use strict';
 
-task3.controller('MainCtrl', [ '$rootScope', '$scope', '$timeout', '$state', 'user', 'message', '$translate', '$http',
-    function($rootScope, $scope, $timeout, $state, user, message, $translate, $http) {
+task3.controller('MainCtrl', [ '$rootScope', '$scope', '$timeout', '$state', 'user', '$translate', '$http',
+    function($rootScope, $scope, $timeout, $state, user, $translate, $http) {
         var promise;
 
         $scope.switchLang = function(lang) {
@@ -12,12 +12,15 @@ task3.controller('MainCtrl', [ '$rootScope', '$scope', '$timeout', '$state', 'us
             return $http.pendingRequests.length > 0;
         };
 
-        $rootScope.$on('$viewContentLoaded', function() {
+        $rootScope.$on('$stateChangeSuccess', function(e, state, params) {
             $scope.message = '';
 
-            $translate(message.get()).then(function(translation) {
-                $scope.message = translation;
-            });
+            if (params.message) {
+                var m = params.message;
+                $translate('task3.common.messages.' + m.tpl, m.params).then(function (translation) {
+                    $scope.message = translation;
+                });
+            }
 
             if (user.isSignedIn()) {
                 if (promise) {
@@ -25,10 +28,11 @@ task3.controller('MainCtrl', [ '$rootScope', '$scope', '$timeout', '$state', 'us
                 }
 
                 promise = $timeout(function () {
-                    message.set('SESSION_TIMEOUT');
                     user.signOut();
-                    $state.go('main.sign-out');
-                }, 100000);
+                    $state.go('main.sign-out', { message: {
+                        tpl: 'sessionTimeout'
+                    }});
+                }, 5000);
             }
         });
     }]);

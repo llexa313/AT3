@@ -1,10 +1,11 @@
 'use strict';
 
-task3.controller('ProfileEditCtrl', ['$scope', 'user', '$state', 'message', function($scope, user, $state, message) {
+task3.controller('ProfileEditCtrl', ['$scope', 'user', '$state', function($scope, user, $state) {
         var loadedUser;
         if (!user.isSignedIn()) {
-            message.set('NOT_AUTHORIZED')
-            $state.go('main.sign-in')
+            $state.go('main.sign-in', { message: {
+                tpl: 'notAuthorized'
+            }});
         } else {
             user.get(function(user) {
                 $scope.user = user;
@@ -20,8 +21,9 @@ task3.controller('ProfileEditCtrl', ['$scope', 'user', '$state', 'message', func
         };
         $scope.submit = function() {
             user.update($scope.user, function() {
-                message.set('PROFILE_UPDATED');
-                $state.go('main.profile.show')
+                $state.go('main.profile.show', { message: {
+                    tpl: 'profileUpdated'
+                }});
             }, function() {
                 //TODO: add exception handling
             })

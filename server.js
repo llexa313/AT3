@@ -15,79 +15,102 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // set the static files location /
+app.use('/', express.static(__dirname + '/public'));
 app.use('/app', express.static(__dirname + '/app'));
-app.use('/api', express.static(__dirname + '/data'));
 app.use('/components', express.static(__dirname + '/bower_components'));
-app.use('/views', express.static(__dirname + '/views'));
 app.use('/lang', express.static(__dirname + '/lang'));
 
 // add some cache data
 var cache = new NodeCache();
-cache.set('users', [
-    {
-        login: 'test',
-        password: '202cb962ac59075b964b07152d234b70',
-        name: 'Alex Pupkin',
-        age: '22',
-        birthdate: '22 Apr 2001'
-    },
-    {
-        login: 'test2',
-        password: '250cf8b51c773f3f8dc8b4be867a9a02',
-        name: 'Dmitry Ivanov',
-        age: '35',
-        birthdate: '11 Jan 1973'
+
+var PAUSE_DELAY = 1000;
+var sessions = {};
+var getUser = function(login) {
+    if (!login) return false;
+
+    var user = cache.get(login);
+
+    if (!user) {
+        try {
+            var userJson = require('./data/' + login + '.json');
+            if (userJson) {
+                cache.set(userJson.login, userJson);
+                user = userJson;
+            }
+        } catch (e) {
+            return false;
+        }
     }
-]);
+    return user;
+};
 
-// render index.html in root
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
-});
-
-app.post('/api/sign-in', pause(2000), function (req, res) {
+app.post('/api/sign-in', pause(PAUSE_DELAY), function (req, res) {
     var login = req.body.login,
         password = req.body.password,
-        users = cache.get('users'),
+        user = getUser(login),
         sessionId;
 
-    for(var i = 0; i < users.length; i++) {
-        if (users[i].login === login) {
-            if (users[i].password === md5(password)) {
-                sessionId = Math.random() * Number.MAX_SAFE_INTEGER;
-                users[i].sessionId = sessionId;
-                cache.set('users', users);
-                res.cookie('session-id', sessionId);
-            }
-            break;
-        }
+    if (user && user.password === md5(password)) {
+        sessionId = Math.random() * Number.MAX_SAFE_INTEGER;
+        sessions[sessionId] = login;
+        user.sessionId = sessionId;
+        cache.set(login, user);
+        res.cookie('session-id', sessionId);
     }
 
     res.send({ success: !!sessionId });
 });
 
 
-app.post('/api/forgot-password', pause(2000), function(req, res) {
-    res.send({ success: true });
-});
+app.post('/api/forgot', pause(PAUSE_DELAY), function(req, res) {
+    var newPassword = Math.round(Math.random() * 100000000).toString(),
+        login = req.body.login,
+        user = getUser(login);
 
-app.get('/api/profile', pause(2000), function(req, res) {
-    var users = cache.get('users');
+    if (user) {
+        user.password = md5(newPassword);
+        cache.set(login, user);
 
-    for(var i = 0; i < users.length; i++) {
-        if (users[i].sessionId == req.cookies['session-id']) {
-            return res.send({
-                name: users[i].name,
-                age: users[i].age,
-                birthdate: users[i].birthdate
-            });
-        }
+        res.send({
+            success: true,
+            newPassword: newPassword
+        });
+    } else {
+        res.send({
+            success: false
+        })
     }
-    res.send({ success: false });
 });
 
-app.post('/api/update', pause(2000), function(req, res) {
-    res.send({ success: true });
+app.get('/api/profile', pause(PAUSE_DELAY), function(req, res) {
+    var login = sessions[req.cookies['session-id']],
+        user = getUser(login);
+
+    if (user) {
+        res.send({
+            name: user.name,
+            age: user.age,
+            birthdate: user.birthdate
+        });
+    } else {
+        res.send({ success: false });
+    }
+});
+
+app.post('/api/update', pause(PAUSE_DELAY), function(req, res) {
+    var login = sessions[req.cookies['session-id']],
+        user = getUser(login),
+        params = req.body;
+
+    if (user) {
+        user.name = params.name;
+        user.age = params.age;
+        user.birthdate = params.birthdate;
+        cache.set(login, user);
+        res.send({ success: true });
+    } else {
+        res.send({ success: false });
+    }
 });
 
 // listen (start app with node server.js) ======================================
