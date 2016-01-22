@@ -25,7 +25,7 @@
     },
     "profile": {
       "title": "Ваш профиль",
-      "signOut": "Sign out",
+      "signOut": "Выйти",
       "name": "Имя",
       "age": "Возраст",
       "birthdate": "Дата рождения",

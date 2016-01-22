@@ -1,13 +1,13 @@
 <div class="app-container">
-    <h4 ng-show="isHttpPending()" class="bg-primary loading" translate="task3.common.loading"></h4>
-    <div ng-show="!isHttpPending()">
+    <div class="bg-primary loading {{ isHttpPending() ? '' : 'hide-visibility' }}" translate="task3.common.loading"></div>
+    <div class="{{ isHttpPending() ? 'disabled' : '' }}" >
         <div class="pull-right switch-lang">
-            <span ng-click="switchLang('ru')">ru</span>
-            |
-            <span ng-click="switchLang('en')">en</span>
+            <span ng-show="lang !== 'ru'" ng-click="switchLang('ru')" class="btn btn-default btn-sm">Русский</span>
+            <span ng-show="lang !== 'en'" ng-click="switchLang('en')" class="btn btn-default btn-sm">English</span>
+            <a ng-show="isSigned()" ng-click="signOut()" class="btn btn-default pull-right sign-out btn-sm" translate="task3.profile.signOut"></a>
         </div>
         <div class="bg-info message">{{ message }}</div>
 
-        <ui-view />
+        <ui-view class="main-content"/>
     </div>
 </div>

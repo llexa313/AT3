@@ -28,6 +28,7 @@ task3.service('user', ['$http', '$cacheFactory', function ($http, $cacheFactory)
     };
 
     this.signOut = function () {
+        document.cookie = '';
         signedIn = false;
     };
 

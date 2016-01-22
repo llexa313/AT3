@@ -2,11 +2,10 @@
 
 var express = require('express');
 var bodyParser = require("body-parser");
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var NodeCache = require( "node-cache" );
 var md5 = require('md5');
-var pause = require('connect-pause')
+var pause = require('connect-pause');
 
 var app = express();
 
@@ -15,10 +14,10 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // set the static files location /
-app.use('/', express.static(__dirname + '/public'));
-app.use('/app', express.static(__dirname + '/app'));
-app.use('/components', express.static(__dirname + '/bower_components'));
-app.use('/lang', express.static(__dirname + '/lang'));
+app.use('/', express.static('./public'));
+app.use('/app', express.static('./app'));
+app.use('/components', express.static('./bower_components'));
+app.use('/lang', express.static('./lang'));
 
 // add some cache data
 var cache = new NodeCache();
@@ -116,4 +115,4 @@ app.post('/api/update', pause(PAUSE_DELAY), function(req, res) {
 // listen (start app with node server.js) ======================================
 app.listen(8080, function () {
     console.log('Server started. Open http://localhost:8080/!');
-})
+});

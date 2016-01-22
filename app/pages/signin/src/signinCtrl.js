@@ -4,7 +4,7 @@ task3.controller('SignInCtrl', ['$scope', 'user', '$state', function($scope, use
         $scope.user = {};
 
         $scope.login = function() {
-            user.signIn($scope.user, function(response){
+            user.signIn($scope.user, function(){
                 $state.go('main.profile.show');
             }, function(e) {
                 $state.transitionTo($state.current, { message: {
