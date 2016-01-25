@@ -7,8 +7,8 @@ task3.controller('ProfileShowCtrl', ['$scope', 'user', '$state', function($scope
             }});
         }
 
-        user.get(function(response) {
-            $scope.user = response;
+        user.get().then(function(response) {
+            $scope.user = response.data;
         }, function() {
             //TODO: add exception handling
         })

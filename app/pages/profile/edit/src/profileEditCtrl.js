@@ -7,9 +7,9 @@ task3.controller('ProfileEditCtrl', ['$scope', 'user', '$state', function($scope
                 tpl: 'notAuthorized'
             }});
         } else {
-            user.get(function(user) {
-                $scope.user = user;
-                loadedUser = user;
+            user.get().then(function(response) {
+                $scope.user = response.data;
+                loadedUser = response.data;
             }, function() {
                 //TODO: add exception handling
             })
@@ -20,7 +20,7 @@ task3.controller('ProfileEditCtrl', ['$scope', 'user', '$state', function($scope
             $scope.user = loadedUser;
         };
         $scope.submit = function() {
-            user.update($scope.user, function() {
+            user.update($scope.user).then(function() {
                 $state.go('main.profile.show', { message: {
                     tpl: 'profileUpdated'
                 }});

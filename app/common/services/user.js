@@ -36,15 +36,15 @@ task3.service('user', ['$http', '$cacheFactory', function ($http, $cacheFactory)
         return signedIn;
     };
 
-    this.get = function (success, error) {
-        $http.get('/api/profile').success(success).error(error);
+    this.get = function () {
+        return $http.get('/api/profile');
     };
 
-    this.forgot = function (user, success, error) {
-        $http.post('/api/forgot', user).success(success).error(error);
+    this.forgot = function (user) {
+        return $http.post('/api/forgot', user);
     };
 
-    this.update = function (user, success, error) {
-        $http.post('/api/update', user).success(success).error(error);
+    this.update = function (user) {
+        return $http.post('/api/update', user);
     };
 }]);
